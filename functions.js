@@ -21,18 +21,19 @@ function createCell(cellType, cellContent, parentTr){
  * @returns {void} nincs visszateresi ertek
  */
 function generateTbody(dataArr, parentTbody){
+    parentTbody.innerHTML = ""
     for(const x of dataArr){
         const trTbody = document.createElement("tr")
         parentTbody.appendChild(trTbody)
-       const tdRowSpan = createCell("td", x.topic, trTbody)
-       createCell("td", x.author, trTbody)
-       createCell("td", x.title, trTbody)
-       if(x.author2 && x.title2 ){
-        tdRowSpan.rowSpan = 2
-        const trTbody2 = document.createElement("tr")
-        parentTbody.appendChild(trTbody2)
-        createCell("td", x.author2, trTbody2)
-        createCell("td", x.title2, trTbody2)
+        const tdRowSpan = createCell("td", x.topic, trTbody)
+        createCell("td", x.author, trTbody)
+        createCell("td", x.title, trTbody)
+        if(x.author2 && x.title2 ){
+            tdRowSpan.rowSpan = 2
+            const trTbody2 = document.createElement("tr")
+            parentTbody.appendChild(trTbody2)
+            createCell("td", x.author2, trTbody2)
+            createCell("td", x.title2, trTbody2)
        }
     }
 }
@@ -79,7 +80,7 @@ function generateInput(labelTxt, inputId, inputName, parentForm){
 
     const labelJs = document.createElement("label")
     labelJs.innerText = labelTxt
-    labelJs.id = inputId
+    labelJs.htmlFor = inputId
     divForm.appendChild(labelJs)
     generateBr(divForm)
     const inputJs = document.createElement("input")
@@ -95,17 +96,110 @@ function generateInput(labelTxt, inputId, inputName, parentForm){
 }
 /**
  * letrehozza a formot
- * @param {formDataArr[]} formDatArr az adattomb
  * @param {HTMLDivElement} parentDiv a div amihez hozzafuzi 
  * @returns {HTMLFormElement} a visszateresi erteke egy form
  */
-function generateForm(formDatArr, parentDiv){
+function generateForm( parentDiv){
+    /** @type {formDataArr[]} */
+    const formArr = [
+    {
+        label: "Témakör",
+        id: "elso",
+        name: "temakor"
+    },
+    {
+        label: "Szerző",
+        id: "masodik",
+        name: "szerzo"
+    },
+    {
+        label: "Mű",
+        id: "harmadik",
+        name: "mu1"
+    },
+    {
+        label: "Másik szerző",
+        id: "negyedik",
+        name: "szerzo2"
+    },
+    {
+        label: "Másik mű",
+        id: "otodik",
+        name: "mu2"
+    }
+]
+    
     const formJs = document.createElement("form")
     formJs.id = "jsform"
     parentDiv.appendChild(formJs)
 
-    for(const f of formDatArr){
-        generateInput(f.label, f.id, f.name,formJs)
+    for(const f of formArr){
+        generateInput(f.label, f.id, f.name, formJs)
     }
+
+    const buttonJs = document.createElement("button")
+    buttonJs.innerText = "Hozzáadás"
+    formJs.appendChild(buttonJs)
     return formJs
+}
+
+/**
+ * uj sort htmles sort add hozza
+ * @param {DataArrType} dataArr az adattomb
+ * @param {HTMLTableSectionElement} parentTbody a tbody amihez hozzafuzi
+ * @returns {void} nincs visszateresi erteke
+ */
+function htmlAddRow(dataArr, parentTbody){
+    const trHtml = document.createElement("tr")
+    parentTbody.appendChild(trHtml)
+    createCell("td", dataArr.topic, trHtml)
+    createCell("td", dataArr.author, trHtml)
+    const tdColSpan = createCell("td", dataArr.title, trHtml)
+    if(dataArr.title2){
+        createCell("td", dataArr.title2, trHtml)
+    }else{
+        tdColSpan.colSpan = 2
+    }
+}
+/**
+ * megnezi hogy az adott kotelezo mezo ki van e toltve
+ * @param {HTMLInputElement} inputField
+ * @returns {boolean} logikai ertek a visszateresi erteke
+ */
+function validateField(inputField){
+    let valid = true
+    if(inputField.value == ""){
+        const inpParent = inputField.parentElement
+        /** @type {HTMLDivElement} */
+        const errorDiv = inpParent.querySelector(".error")
+        errorDiv.innerText = "Kötelező mező"
+        valid = false
+    }
+    return valid
+}
+/**
+ * validalja az osszes kotelezo mezot
+ * @param {HTMLInputElement} firstInp temakor mezo
+ * @param {HTMLInputElement} secondInp szerzo mezo
+ * @param {HTMLInputElement} thirdInp mu1 mezo
+ * @param {HTMLFormElement} parentForm form amihez hozzafuzi
+ * @returns {boolean} logikai ertekkel ter vissza
+ */
+function validateAllFields(firstInp, secondInp, thirdInp, parentForm){
+    let valid = true
+    const errorDivList = parentForm.querySelectorAll(".error")
+    for(const errorDiv of errorDivList){
+        
+        errorDiv.innerText = ""
+    }
+    if(!validateField(firstInp)){
+        valid = false
+    }
+    if(!validateField(secondInp)){
+        valid = false
+    }
+    if(!validateField(thirdInp)){
+        valid = false
+    }
+    return valid
 }
