@@ -50,22 +50,37 @@ inputCheckBox.addEventListener("change", function(e){
     const checkTarget = e.target
     checkBoxOnLoad(checkTarget)
 })
-/**
- * 
- * @param {HTMLInputElement} checkBox a checkbox
- * @returns {void} nincs visszateresi erteke 
- */
-function checkBoxOnLoad(checkBox){
-    const jsSecDiv = document.getElementById("jssection") 
-    const htmlSecDiv = document.getElementById("htmlsection")
-    if(checkBox.checked) {
-        jsSecDiv.classList.remove("hide") 
-        htmlSecDiv.classList.add("hide")
-    }
-    else{ 
-        jsSecDiv.classList.add("hide") 
-        htmlSecDiv.classList.remove("hide") 
-    }
 
-}
+/** @type {formDataArr[]} */
+const formArr = [
+    {
+        label: "Témakör",
+        id: "elso",
+        name: "temakor"
+    },
+    {
+        label: "Szerző",
+        id: "masodik",
+        name: "szerzo"
+    },
+    {
+        label: "Mű",
+        id: "harmadik",
+        name: "mu1"
+    },
+    {
+        label: "Másik szerző",
+        id: "negyedik",
+        name: "szerzo2"
+    },
+    {
+        label: "Másik mű",
+        id: "otodik",
+        name: "mu2"
+    }
+]
+const formJs = generateForm(formArr, jsDiv)
 
+const buttonJs = document.createElement("button")
+buttonJs.innerText = "Hozzáadás"
+formJs.appendChild(buttonJs)
