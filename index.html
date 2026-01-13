@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irodalmi témakörök</title>
+    <style>
+        table,tr,td,th{
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 1px;
+        }
+      
+       .hide{
+            display:none;
+        }
+    </style>
+</head>
+<body>
+    <input type="checkbox" id="tableselector" >
+    <label for="tableselector">JavaScpriptes tablazat</label>
+    <div id="htmlsection" class="hide">
+    <table>
+        <thead>
+            <tr>
+                <th>Témakör</th>
+                <th>Szerző</th>
+                <th colspan="2">Mű</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+			<tr>
+                <td>Erdélyi szerzők</td>
+                <td>Reményik Sándor</td>
+                <td colspan="2">Halotti vers a fulló leveleknek</td>
+                
+            </tr>  
+            <tr>
+                <td>XX. századi világirodalom</td>
+                <td>Thomas Mann</td>
+                <td>Tonio Kröger</td>
+                <td>Mario és a varázsló</td>
+            </tr>
+            <tr>
+                <td>XX. századi világirodalom</td>
+                <td>Franz Kafka</td>
+                <td colspan="2">Az átváltozás</td>
+            </tr>
+            <tr>
+                <td>Nyugatos szerzők</td>
+                <td>Móricz Zsigmond</td>
+                <td>Úri muri</td>
+                <td>Tragédia</td>
+            </tr>
+			<tr>
+                <td>Nyugatos szerzők</td>
+                <td>Ady Endre</td>
+                <td>Héja-nász az avaron</td>
+                <td>Góg és Magóg fia</td>
+            </tr>
+        </tbody>
+    </table>
+
+    </div>
+
+    <script src="functions.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>
